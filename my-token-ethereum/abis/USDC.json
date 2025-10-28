@@ -70,5 +70,15 @@
       { "name": "implementation", "type": "address", "indexed": false }
     ],
     "anonymous": false
+  },
+  {
+    "name": "Transfer",
+    "type": "event",
+    "inputs": [
+      { "name": "from", "type": "address", "indexed": true },
+      { "name": "to", "type": "address", "indexed": true },
+      { "name": "value", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false
   }
 ]

@@ -1,8 +1,9 @@
 import {
   AdminChanged as AdminChangedEvent,
-  Upgraded as UpgradedEvent
+  Upgraded as UpgradedEvent,
+  Transfer as TransferEvent
 } from "../generated/USDC/USDC"
-import { AdminChanged, Upgraded } from "../generated/schema"
+import { AdminChanged, Upgraded, Transfer } from "../generated/schema"
 
 export function handleAdminChanged(event: AdminChangedEvent): void {
   let entity = new AdminChanged(
@@ -23,6 +24,21 @@ export function handleUpgraded(event: UpgradedEvent): void {
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.implementation = event.params.implementation
+
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
+
+  entity.save()
+}
+
+export function handleTransfer(event: TransferEvent): void {
+  let entity = new Transfer(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  )
+  entity.from = event.params.from
+  entity.to = event.params.to
+  entity.value = event.params.value
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp

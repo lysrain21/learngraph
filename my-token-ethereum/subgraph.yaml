@@ -10,7 +10,7 @@ dataSources:
     source:
       address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       abi: USDC
-      startBlock: 6082465
+      startBlock: 23620000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -18,6 +18,7 @@ dataSources:
       entities:
         - AdminChanged
         - Upgraded
+        - Transfer
       abis:
         - name: USDC
           file: ./abis/USDC.json
@@ -26,4 +27,6 @@ dataSources:
           handler: handleAdminChanged
         - event: Upgraded(address)
           handler: handleUpgraded
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
       file: ./src/usdc.ts
